@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днем Рождения!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --valorant-dark: #0F1923;
+            --valorant-red: #FF4655;
+            --valorant-light: #ECE8E1;
+            --valorant-green: #32CD32;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--valorant-dark);
+            color: var(--valorant-light);
+            overflow-x: hidden;
+        }
+        .font-russo {
+            font-family: 'Russo One', sans-serif;
+            text-transform: uppercase;
+        }
+        .text-valorant-red { color: var(--valorant-red); }
+        .card {
+            background-color: #1a2c3a;
+            border: 2px solid transparent;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--valorant-red);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInAnimation 0.8s ease-out forwards;
+        }
+        @keyframes fadeInAnimation {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animated-section { opacity: 0; }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+        }
+        .section-title::before, .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            height: 2px;
+            width: 50px;
+            background-color: var(--valorant-red);
+            transform: translateY(-50%);
+        }
+        .section-title::before { left: -60px; }
+        .section-title::after { right: -60px; }
+        
+        @media (max-width: 768px) {
+            .section-title::before, .section-title::after { display: none; }
+        }
+
+        #preloader {
+            background-color: var(--valorant-dark);
+            transition: opacity 1s ease-in-out;
+        }
+        .preloader-fade-out { opacity: 0; }
+        #ascii-heart {
+            font-family: monospace;
+            color: var(--valorant-red);
+            font-size: 1rem;
+            line-height: 1;
+            text-shadow: 0 0 5px var(--valorant-red), 0 0 10px var(--valorant-red);
+            transform: scale(0);
+            opacity: 0;
+            animation: grow-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes grow-in {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .glitch-decode {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--valorant-light);
+            letter-spacing: 0.1em;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px var(--valorant-red);
+            text-align: center;
+            width: 100%;
+            min-height: 50px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        @media (min-width: 768px) {
+            .glitch-decode { font-size: 2rem; }
+        }
+
+        .background-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .line {
+            position: absolute;
+            height: 2px;
+            background: rgba(255, 70, 85, 0.1);
+            animation: move-line 20s linear infinite;
+        }
+        .line:nth-child(1) { width: 60%; top: 10%; left: -70%; animation-duration: 15s; }
+        .line:nth-child(2) { width: 40%; top: 30%; left: -50%; animation-duration: 25s; }
+        .line:nth-child(3) { width: 80%; top: 70%; left: -90%; animation-duration: 18s; }
+        @keyframes move-line {
+            from { transform: translateX(0) rotate(-45deg); }
+            to { transform: translateX(200vw) rotate(-45deg); }
+        }
+        #parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--valorant-dark) 0%, #2a0a1f 100%);
+            z-index: 0;
+        }
+        
+        .achievement-card {
+            background: #1a2c3a;
+            border: 2px solid #2a3b49;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--valorant-red);
+            background: #213647;
+        }
+        .achievement-icon {
+            height: 50px;
+            width: 50px;
+            margin: 0 auto 1rem;
+            color: var(--valorant-red);
+        }
+
+        #tag-cloud {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .tag {
+            font-family: 'Russo One', sans-serif;
+            padding: 0.5rem 1rem;
+            border: 2px solid transparent;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            transform: scale(1.1);
+            border-color: var(--valorant-red);
+            text-shadow: 0 0 8px var(--valorant-red);
+        }
+
+        /* --- СТИЛИ ДЛЯ ВИКТОРИНЫ --- */
+        #quiz-container {
+            background-color: #1a2c3a;
+            border: 2px solid var(--valorant-red);
+            padding: 2rem;
+        }
+        .quiz-question {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .quiz-options { grid-template-columns: 1fr 1fr; }
+        }
+        .quiz-option {
+            background-color: var(--valorant-dark);
+            border: 2px solid #2a3b49;
+            padding: 1rem;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .quiz-option:hover {
+            background-color: #213647;
+            border-color: var(--valorant-light);
+        }
+        .quiz-option.correct {
+            background-color: var(--valorant-green);
+            border-color: var(--valorant-green);
+            color: var(--valorant-dark);
+        }
+        .quiz-option.incorrect {
+            background-color: var(--valorant-red);
+            border-color: var(--valorant-red);
+            color: var(--valorant-dark);
+        }
+        .quiz-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* --- СТИЛИ ДЛЯ ФИНАЛЬНОЙ АНИМАЦИИ ВИКТОРИНЫ --- */
+        #quiz-final-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--valorant-dark);
+            z-index: 300;
+            display: none; /* Changed from flex to none */
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .valorant-word {
+            position: absolute;
+            font-family: 'Russo One', sans-serif;
+            color: var(--valorant-red);
+            opacity: 0;
+            animation: fadeInOut 4s infinite ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.3; transform: scale(1); }
+        }
+        #end-text {
+            font-size: 8rem;
+            color: var(--valorant-light);
+            z-index: 310;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: end-appear 1s 4s forwards;
+        }
+        @keyframes end-appear {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 25, 35, 0.9);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            position: relative;
+            padding: 8px;
+            border: 2px solid var(--valorant-red);
+            background: var(--valorant-dark);
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            display: block;
+        }
+        .close-modal {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            background: var(--valorant-red);
+            color: var(--valorant-light);
+            border: none;
+            font-family: 'Russo One', sans-serif;
+            cursor: pointer;
+            clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+        }
+        #surprise-button {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        #surprise-button:hover {
+            color: var(--valorant-red);
+            text-shadow: 0 0 5px var(--valorant-red);
+        }
+    </style>
+</head>
+<body class="valorant-bg-dark">
+    
+    <div class="background-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <div id="preloader" class="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-[100] gap-8 p-4">
+        <pre id="ascii-heart">
+ __   __
+/  '.'  \
+|       |
+ \     /
+  \   /
+   \ /
+    V
+        </pre>
+        <div id="glitch-text" class="glitch-decode"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <header class="h-screen flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
+            <div id="parallax-bg"></div>
+            <div class="fade-in z-10">
+                <h1 class="font-russo text-4xl sm:text-5xl md:text-7xl lg:text-8xl drop-shadow-lg text-valorant-light">
+                    С Днем Рождения, <span class="text-valorant-red">Юлечка!</span>
+                </h1>
+                <p class="mt-4 text-base sm:text-lg md:text-xl font-light text-gray-300">Инициализация протокола поздравлений...</p>
+            </div>
+        </header>
+
+        <main>
+            <section id="message" class="py-16 md:py-32">
+                <div class="max-w-3xl mx-auto text-center animated-section">
+                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12">Личное сообщение</h2>
+                    <p class="text-lg md:text-xl leading-relaxed text-gray-300">
+                        Дорогая, от всего сердца поздравляю тебя с днем рождения! Желаю, чтобы каждый твой день был наполнен радостью, улыбками и теплом. Пусть сбудутся все самые заветные мечты, а рядом всегда будут верные друзья и любящие люди. Будь счастлива!
+                    </p>
+                </div>
+            </section>
+            
+            <section id="achievements" class="py-16 md:py-32">
+                <div class="max-w-5xl mx-auto animated-section">
+                     <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Доска достижений</h2>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg><h3 class="font-russo text-xl text-valorant-light">Самая красивая девушка</h3></div>
+                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg><h3 class="font-russo text-xl text-valorant-light">Платина в валоранте!</h3></div>
+                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V5.118a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0V15.546z" /></svg><h3 class="font-russo text-xl text-valorant-light">Красивейшие ноготочки</h3></div>
+                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg><h3 class="font-russo text-xl text-valorant-light">Самая добрая и хорошая</h3></div>
+                     </div>
+                </div>
+            </section>
+
+            <section id="tags" class="py-16 md:py-32">
+                <div class="max-w-5xl mx-auto animated-section">
+                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Личное дело</h2>
+                    <div id="tag-cloud"></div>
+                </div>
+            </section>
+
+            <!-- === НОВАЯ СЕКЦИЯ: ВИКТОРИНА === -->
+            <section id="quiz" class="py-16 md:py-32">
+                <div class="max-w-4xl mx-auto animated-section">
+                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Тест на дружбу</h2>
+                    <div id="quiz-container">
+                        <div id="quiz-question-text" class="quiz-question"></div>
+                        <div id="quiz-options-container" class="quiz-options"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery" class="py-16 md:py-32">
+                <div class="max-w-6xl mx-auto animated-section">
+                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12 text-center">Архив воспоминаний</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/p6PLDGVT/photo-2025-04-14-19-59-19-1.jpg" alt="Фотография с подругой 1" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/ee9ca7/ffffff?text=Ошибка+загрузки';"></div>
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/pBvP3xny/photo-2025-02-15-19-32-00-1.jpg" alt="Фотография с подругой 2" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/ffdde1/333333?text=Ошибка+загрузки';"></div>
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/TMvy35nL/photo-2025-01-27-19-02-30-1.jpg" alt="Фотография с подругой 3" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/f7a3b5/ffffff?text=Ошибка+загрузки';"></div>
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/zWqkmGb4/photo-2024-11-03-10-26-44-1.jpg" alt="Фотография с подругой 4" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/fbc2eb/ffffff?text=Ошибка+загрузки';"></div>
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/d4NsQ6M2/photo-2025-05-25-19-37-54-1.jpg" alt="Фотография с подругой 5" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/a6c1ee/333333?text=Ошибка+загрузки';"></div>
+                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/b52t1XV7/photo-2024-10-31-16-11-06-1.jpg" alt="Фотография с подругой 6" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/f5a091/ffffff?text=Ошибка+загрузки';"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="video" class="py-16 md:py-32">
+                <div class="max-w-4xl mx-auto text-center animated-section">
+                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12">Видеофайл</h2>
+                    <div class="border-2 border-valorant-red p-1">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://youtu.be/DItJSCPXCkI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-12 border-t-2 border-gray-800">
+            <p class="text-gray-500 font-russo">Поздравление <span class="text-valorant-red">с любовью</span> Юлечке! А что это тут такое... <span id="surprise-button">окак</span>?</p>
+        </footer>
+    </div>
+    
+    <div id="surprise-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal"></button>
+            <img src="https://i.ibb.co/B2Kv784t/resized-687e425ce01c8.jpg" alt="Фото-сюрприз">
+        </div>
+    </div>
+    
+    <div id="quiz-photo-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal"></button>
+            <img src="https://i.ibb.co/Qjzq08GL/photo-2025-07-21-19-58-06-1.jpg" alt="Фото-сюрприз для викторины">
+        </div>
+    </div>
+
+    <div id="quiz-final-animation">
+        <div id="end-text" class="font-russo">КОНЕЦ!</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- ОСНОВНАЯ ЛОГИКА ---
+            const preloader = document.getElementById('preloader');
+            const glitchTextElement = document.getElementById('glitch-text');
+            const final_text = "С днем рождения, любимка!";
+
+            function hidePreloader() {
+                preloader.classList.add('preloader-fade-out');
+                setTimeout(() => { preloader.style.display = 'none'; }, 1000);
+            }
+
+            function decodeEffect(element, text) {
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+                let interval = null;
+                let iteration = 0;
+                interval = setInterval(() => {
+                    element.innerText = text.split("").map((letter, index) => {
+                        if (index < iteration) return text[index];
+                        if (text[index] === ' ') return ' ';
+                        return letters[Math.floor(Math.random() * letters.length)];
+                    }).join("");
+                    if (iteration >= text.length) {
+                        clearInterval(interval);
+                        setTimeout(hidePreloader, 1500);
+                    }
+                    iteration += 1 / 2;
+                }, 35);
+            }
+
+            setTimeout(() => {
+                glitchTextElement.style.opacity = 1;
+                decodeEffect(glitchTextElement, final_text);
+            }, 1000);
+
+            const animatedSections = document.querySelectorAll('.animated-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            animatedSections.forEach(section => observer.observe(section));
+
+            const parallaxBg = document.getElementById('parallax-bg');
+            window.addEventListener('scroll', function() {
+                const offset = window.pageYOffset;
+                parallaxBg.style.transform = `translateY(${offset * 0.5}px)`;
+            });
+
+            // --- ОБРАБОТЧИКИ МОДАЛЬНЫХ ОКОН ---
+            function setupModal(triggerId, modalId) {
+                const trigger = document.getElementById(triggerId);
+                const modal = document.getElementById(modalId);
+                if (!trigger || !modal) return;
+
+                const closeModalButton = modal.querySelector('.close-modal');
+                trigger.addEventListener('click', () => modal.classList.add('active'));
+                closeModalButton.addEventListener('click', () => modal.classList.remove('active'));
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('active');
+                });
+            }
+            setupModal('surprise-button', 'surprise-modal');
+
+            // --- ЛОГИКА ДЛЯ ОБЛАКА ТЕГОВ ---
+            const tags = ['геймерша', 'умница', 'красавица', 'веселая', 'добрая', 'умная', 'валорантерша', 'топ1валоранта', 'сладкоежка', 'красивые глаза', 'ангельский голос', 'прекрасный художник', 'черноволосая', 'любит басика'];
+            const tagCloud = document.getElementById('tag-cloud');
+            tags.forEach(tagText => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tagText;
+                const size = Math.random() * 1.5 + 0.8;
+                tagElement.style.fontSize = `${size}rem`;
+                tagElement.style.color = Math.random() > 0.6 ? 'var(--valorant-red)' : 'var(--valorant-light)';
+                tagCloud.appendChild(tagElement);
+            });
+
+            // --- ЛОГИКА ДЛЯ ВИКТОРИНЫ ---
+            const quizData = [
+                { question: "Какую фразу Юля говорит чаще всего?", options: ["ватафак", "ого", "окак", "ода"], correct: 2 },
+                { question: "Кого Юлечек любит больше всего?", options: ["Вазика", "Басика", "Тазика", "Зазика"], correct: 1, action: 'showPhoto' },
+                { question: "Что Юлечка любит больше всего?", options: ["Сладкое", "Валорант", "Краситься", "Сеструху"], correct: 'all' },
+                { question: "Какие скины Юля больше всего предпочитает в валоранте?", options: ["Грёзы Эвори", "RGX 11z Pro", "Араксис", "Таинственный цветок"], correct: 0 },
+                { question: "Когда мы с тобой познакомились?", options: ["13.09.2024", "25.08.2024", "11.01.2024", "25.10.2024"], correct: 3 },
+                { question: "Какой фильм мы смотрели вместе?", options: ["Волк с Уолл-Стрит", "Бойцовский клуб", "Субстанция", "Лимонные девочки"], correct: 2 },
+                { question: "Идеальный вечер для Юли — это:", options: ["Катки в Valorant до утра", "Уютный вечер с сериалом и вкусняшками", "Шумная вечеринка с друзьями", "Поход за новым маникюром"], correct: 0 },
+                { question: "Ее секретное оружие в споре — это:", options: ["Неопровержимые факты и логика", '"Я тебя поняла."', 'Фраза "Ну я же девочка!"', "Смешной мем по теме"], correct: 1 },
+                { question: "Какой титул ей подходит больше всего?", options: ["Императрица хэдшотов", "Королева нейл-арта", "Повелительница кота Басика", 'Герцогиня "еще-один-кусочек-тортика"'], correct: 2 },
+                { question: "Какую игру больше всего любит Юлечка?", options: ["Валорант", "Валорант", "Валорант", "Валорант"], correct: 'all', action: 'final' }
+            ];
+
+            let currentQuestionIndex = 0;
+            const quizQuestionText = document.getElementById('quiz-question-text');
+            const quizOptionsContainer = document.getElementById('quiz-options-container');
+            const quizPhotoModal = document.getElementById('quiz-photo-modal');
+            const quizFinalAnimation = document.getElementById('quiz-final-animation');
+
+            function showQuizPhoto() {
+                quizPhotoModal.classList.add('active');
+                const closeBtn = quizPhotoModal.querySelector('.close-modal');
+                const closeOverlay = (e) => {
+                    if(e.target === quizPhotoModal || e.target === closeBtn) {
+                        quizPhotoModal.classList.remove('active');
+                        quizPhotoModal.removeEventListener('click', closeOverlay);
+                    }
+                };
+                quizPhotoModal.addEventListener('click', closeOverlay);
+            }
+
+            function startFinalAnimation() {
+                quizFinalAnimation.style.display = 'flex';
+                for(let i = 0; i < 30; i++) {
+                    const word = document.createElement('div');
+                    word.textContent = 'VALORANT';
+                    word.className = 'valorant-word';
+                    word.style.top = `${Math.random() * 100}vh`;
+                    word.style.left = `${Math.random() * 100}vw`;
+                    word.style.fontSize = `${Math.random() * 4 + 2}rem`;
+                    word.style.animationDelay = `${Math.random() * 2}s`;
+                    quizFinalAnimation.appendChild(word);
+                }
+                setTimeout(() => {
+                    quizFinalAnimation.style.display = 'none';
+                    quizFinalAnimation.innerHTML = '<div id="end-text" class="font-russo">КОНЕЦ!</div>'; // Reset for next time
+                }, 5500);
+            }
+
+            function handleOptionClick(e) {
+                const selectedOptionIndex = parseInt(e.target.dataset.index);
+                const questionData = quizData[currentQuestionIndex];
+                const options = quizOptionsContainer.querySelectorAll('.quiz-option');
+
+                let isCorrect = false;
+                if (questionData.correct === 'all') {
+                    isCorrect = true;
+                } else {
+                    isCorrect = selectedOptionIndex === questionData.correct;
+                }
+                
+                options.forEach((option, index) => {
+                    option.classList.add('disabled');
+                    if (questionData.correct === 'all') {
+                        option.classList.add('correct');
+                    } else if (index === questionData.correct) {
+                        option.classList.add('correct');
+                    } else if (index === selectedOptionIndex) {
+                        option.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect && questionData.action === 'showPhoto') {
+                    setTimeout(showQuizPhoto, 500);
+                }
+
+                if (questionData.action === 'final') {
+                    setTimeout(startFinalAnimation, 1000);
+                    return;
+                }
+                
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < quizData.length) {
+                        renderQuestion();
+                    } else {
+                        quizQuestionText.textContent = "Тест пройден!";
+                        quizOptionsContainer.innerHTML = "";
+                    }
+                }, 2000);
+            }
+
+            function renderQuestion() {
+                const questionData = quizData[currentQuestionIndex];
+                quizQuestionText.textContent = questionData.question;
+                quizOptionsContainer.innerHTML = '';
+                questionData.options.forEach((optionText, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'quiz-option';
+                    optionElement.textContent = optionText;
+                    optionElement.dataset.index = index;
+                    optionElement.addEventListener('click', handleOptionClick);
+                    quizOptionsContainer.appendChild(optionElement);
+                });
+            }
+
+            renderQuestion();
+        });
+    </script>
+</body>
+</html>
