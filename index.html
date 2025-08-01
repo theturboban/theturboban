@@ -3,629 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С Днем Рождения!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <title>Руководство по проверке на читы - ReallyWorld</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap)" rel="stylesheet">
     <style>
-        :root {
-            --valorant-dark: #0F1923;
-            --valorant-red: #FF4655;
-            --valorant-light: #ECE8E1;
-            --valorant-green: #32CD32;
-        }
-        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--valorant-dark);
-            color: var(--valorant-light);
-            overflow-x: hidden;
+            background-color: #111827;
+            color: #e5e7eb;
         }
-        .font-russo {
-            font-family: 'Russo One', sans-serif;
-            text-transform: uppercase;
-        }
-        .text-valorant-red { color: var(--valorant-red); }
         .card {
-            background-color: #1a2c3a;
-            border: 2px solid transparent;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--valorant-red);
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInAnimation 0.8s ease-out forwards;
-        }
-        @keyframes fadeInAnimation {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animated-section { opacity: 0; }
-        .section-title {
-            position: relative;
-            display: inline-block;
-            padding: 0 10px;
-        }
-        .section-title::before, .section-title::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            height: 2px;
-            width: 50px;
-            background-color: var(--valorant-red);
-            transform: translateY(-50%);
-        }
-        .section-title::before { left: -60px; }
-        .section-title::after { right: -60px; }
-        
-        @media (max-width: 768px) {
-            .section-title::before, .section-title::after { display: none; }
-        }
-
-        #preloader {
-            background-color: var(--valorant-dark);
-            transition: opacity 1s ease-in-out;
-        }
-        .preloader-fade-out { opacity: 0; }
-        #ascii-heart {
-            font-family: monospace;
-            color: var(--valorant-red);
-            font-size: 1rem;
-            line-height: 1;
-            text-shadow: 0 0 5px var(--valorant-red), 0 0 10px var(--valorant-red);
-            transform: scale(0);
-            opacity: 0;
-            animation: grow-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        @keyframes grow-in {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .glitch-decode {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--valorant-light);
-            letter-spacing: 0.1em;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 5px var(--valorant-red);
-            text-align: center;
-            width: 100%;
-            min-height: 50px;
-            opacity: 0;
-            transition: opacity 0.5s ease-in;
-        }
-        @media (min-width: 768px) {
-            .glitch-decode { font-size: 2rem; }
-        }
-
-        .background-lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        .line {
-            position: absolute;
-            height: 2px;
-            background: rgba(255, 70, 85, 0.1);
-            animation: move-line 20s linear infinite;
-        }
-        .line:nth-child(1) { width: 60%; top: 10%; left: -70%; animation-duration: 15s; }
-        .line:nth-child(2) { width: 40%; top: 30%; left: -50%; animation-duration: 25s; }
-        .line:nth-child(3) { width: 80%; top: 70%; left: -90%; animation-duration: 18s; }
-        @keyframes move-line {
-            from { transform: translateX(0) rotate(-45deg); }
-            to { transform: translateX(200vw) rotate(-45deg); }
-        }
-        #parallax-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(145deg, var(--valorant-dark) 0%, #2a0a1f 100%);
-            z-index: 0;
-        }
-        
-        .achievement-card {
-            background: #1a2c3a;
-            border: 2px solid #2a3b49;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-        }
-        .achievement-card:hover {
             transform: translateY(-5px);
-            border-color: var(--valorant-red);
-            background: #213647;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        .achievement-icon {
-            height: 50px;
-            width: 50px;
-            margin: 0 auto 1rem;
-            color: var(--valorant-red);
-        }
-
-        #tag-cloud {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .tag {
-            font-family: 'Russo One', sans-serif;
-            padding: 0.5rem 1rem;
-            border: 2px solid transparent;
-            cursor: default;
-            transition: all 0.3s ease;
-        }
-        .tag:hover {
-            transform: scale(1.1);
-            border-color: var(--valorant-red);
-            text-shadow: 0 0 8px var(--valorant-red);
-        }
-
-        /* --- СТИЛИ ДЛЯ ВИКТОРИНЫ --- */
-        #quiz-container {
-            background-color: #1a2c3a;
-            border: 2px solid var(--valorant-red);
-            padding: 2rem;
-        }
-        .quiz-question {
-            font-family: 'Russo One', sans-serif;
+        .card-title {
             font-size: 1.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        @media (min-width: 768px) {
-            .quiz-options { grid-template-columns: 1fr 1fr; }
-        }
-        .quiz-option {
-            background-color: var(--valorant-dark);
-            border: 2px solid #2a3b49;
-            padding: 1rem;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            color: #f9fafb;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 0.5rem;
         }
-        .quiz-option:hover {
-            background-color: #213647;
-            border-color: var(--valorant-light);
-        }
-        .quiz-option.correct {
-            background-color: var(--valorant-green);
-            border-color: var(--valorant-green);
-            color: var(--valorant-dark);
-        }
-        .quiz-option.incorrect {
-            background-color: var(--valorant-red);
-            border-color: var(--valorant-red);
-            color: var(--valorant-dark);
-        }
-        .quiz-option.disabled {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        /* --- СТИЛИ ДЛЯ ФИНАЛЬНОЙ АНИМАЦИИ ВИКТОРИНЫ --- */
-        #quiz-final-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--valorant-dark);
-            z-index: 300;
-            display: none; /* Changed from flex to none */
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .valorant-word {
-            position: absolute;
-            font-family: 'Russo One', sans-serif;
-            color: var(--valorant-red);
-            opacity: 0;
-            animation: fadeInOut 4s infinite ease-in-out;
-        }
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; transform: scale(0.8); }
-            50% { opacity: 0.3; transform: scale(1); }
-        }
-        #end-text {
-            font-size: 8rem;
-            color: var(--valorant-light);
-            z-index: 310;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: end-appear 1s 4s forwards;
-        }
-        @keyframes end-appear {
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 25, 35, 0.9);
-            z-index: 200;
+        .program-card {
+            background-color: #374151;
+            border-radius: 0.5rem;
+            padding: 1rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            margin-bottom: 1rem;
         }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .program-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
         }
-        .modal-content {
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .flowchart-item {
+            background-color: #374151;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            width: 80%;
+            text-align: center;
             position: relative;
-            padding: 8px;
-            border: 2px solid var(--valorant-red);
-            background: var(--valorant-dark);
-            max-width: 90vw;
-            max-height: 90vh;
+            border-left: 4px solid #4f46e5;
         }
-        .modal-content img {
-            max-width: 100%;
-            max-height: 85vh;
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #4b5563;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #374151;
+            font-weight: 600;
+        }
+        .highlight {
+            color: #818cf8;
+            font-weight: 600;
+        }
+        .ban-reason {
+            background-color: #4b5563;
+            color: #f9fafb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .nav-menu {
+            position: sticky;
+            top: 1rem;
+            align-self: flex-start;
+        }
+        .nav-menu a {
             display: block;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            color: #d1d5db;
+            transition: background-color 0.2s, color 0.2s;
         }
-        .close-modal {
-            position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 30px;
-            height: 30px;
-            background: var(--valorant-red);
-            color: var(--valorant-light);
-            border: none;
-            font-family: 'Russo One', sans-serif;
-            cursor: pointer;
-            clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-        }
-        #surprise-button {
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        #surprise-button:hover {
-            color: var(--valorant-red);
-            text-shadow: 0 0 5px var(--valorant-red);
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: #4f46e5;
+            color: #ffffff;
         }
     </style>
 </head>
-<body class="valorant-bg-dark">
-    
-    <div class="background-lines">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
+<body class="p-4 sm:p-6 md:p-8">
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-bold text-white mb-2">Руководство для Модераторов ReallyWorld</h1>
+        <p class="text-lg text-gray-400">Всеобъемлющее пособие по правилам и методам проверок на читы</p>
+    </header>
 
-    <div id="preloader" class="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-[100] gap-8 p-4">
-        <pre id="ascii-heart">
- __   __
-/  '.'  \
-|       |
- \     /
-  \   /
-   \ /
-    V
-        </pre>
-        <div id="glitch-text" class="glitch-decode"></div>
-    </div>
+    <div class="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Навигационное меню -->
+        <aside class="lg:col-span-1">
+            <nav id="nav-menu" class="nav-menu">
+                <h3 class="text-xl font-bold mb-4 px-4">Навигация</h3>
+                <a href="#programs">Обязательные программы</a>
+                <a href="#ban-reasons">Причины бана</a>
+                <a href="#takker">Обнаружение Takker</a>
+                <a href="#xameleon">Обнаружение Xameleon</a>
+                <a href="#systeminformer-memory">Поиск в SystemInformer</a>
+                <a href="#folder-checks">Проверка папок</a>
+                <a href="#version-weight">Вес версий</a>
+                <a href="#optifine">Нестандартный OptiFine</a>
+                <a href="#bat-files">Батники на чистку</a>
+                <a href="#call-rules">Правила вызова</a>
+                <a href="#anydesk-time">Время на проверке</a>
+                <a href="#phone-check">Проверка телефона</a>
+                <a href="#interference">Помеха проверке</a>
+                <a href="#confession">Признание игрока</a>
+                <a href="#special-checks">Особые проверки</a>
+                <a href="#analogy">Аналогия для закрепления</a>
+            </nav>
+        </aside>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <header class="h-screen flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
-            <div id="parallax-bg"></div>
-            <div class="fade-in z-10">
-                <h1 class="font-russo text-4xl sm:text-5xl md:text-7xl lg:text-8xl drop-shadow-lg text-valorant-light">
-                    С Днем Рождения, <span class="text-valorant-red">Юлечка!</span>
-                </h1>
-                <p class="mt-4 text-base sm:text-lg md:text-xl font-light text-gray-300">Инициализация протокола поздравлений...</p>
-            </div>
-        </header>
-
-        <main>
-            <section id="message" class="py-16 md:py-32">
-                <div class="max-w-3xl mx-auto text-center animated-section">
-                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12">Личное сообщение</h2>
-                    <p class="text-lg md:text-xl leading-relaxed text-gray-300">
-                        Дорогая, от всего сердца поздравляю тебя с днем рождения! Желаю, чтобы каждый твой день был наполнен радостью, улыбками и теплом. Пусть сбудутся все самые заветные мечты, а рядом всегда будут верные друзья и любящие люди. Будь счастлива!
-                    </p>
-                </div>
-            </section>
-            
-            <section id="achievements" class="py-16 md:py-32">
-                <div class="max-w-5xl mx-auto animated-section">
-                     <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Доска достижений</h2>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg><h3 class="font-russo text-xl text-valorant-light">Самая красивая девушка</h3></div>
-                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg><h3 class="font-russo text-xl text-valorant-light">Платина в валоранте!</h3></div>
-                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V5.118a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0V15.546z" /></svg><h3 class="font-russo text-xl text-valorant-light">Красивейшие ноготочки</h3></div>
-                        <div class="achievement-card"><svg class="achievement-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg><h3 class="font-russo text-xl text-valorant-light">Самая добрая и хорошая</h3></div>
-                     </div>
-                </div>
-            </section>
-
-            <section id="tags" class="py-16 md:py-32">
-                <div class="max-w-5xl mx-auto animated-section">
-                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Личное дело</h2>
-                    <div id="tag-cloud"></div>
-                </div>
-            </section>
-
-            <!-- === НОВАЯ СЕКЦИЯ: ВИКТОРИНА === -->
-            <section id="quiz" class="py-16 md:py-32">
-                <div class="max-w-4xl mx-auto animated-section">
-                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-16 text-center">Тест на дружбу</h2>
-                    <div id="quiz-container">
-                        <div id="quiz-question-text" class="quiz-question"></div>
-                        <div id="quiz-options-container" class="quiz-options"></div>
+        <!-- Основной контент -->
+        <main class="lg:col-span-3">
+            <!-- Обязательные программы -->
+            <section id="programs" class="card">
+                <h2 class="card-title">Обязательные программы для проверок</h2>
+                <p class="mb-6 text-gray-300">Это арсенал каждого модератора. Знание функций этих программ — ключ к успешной проверке.</p>
+                <div class="space-y-4">
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=SB](https://placehold.co/40x40/4f46e5/ffffff?text=SB)" alt="Иконка ShellBag" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">ShellBag</h3>
+                            <p class="text-gray-400">Просмотр удаленных папок и их следов.</p>
+                        </div>
                     </div>
-                </div>
-            </section>
-
-            <section id="gallery" class="py-16 md:py-32">
-                <div class="max-w-6xl mx-auto animated-section">
-                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12 text-center">Архив воспоминаний</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/p6PLDGVT/photo-2025-04-14-19-59-19-1.jpg" alt="Фотография с подругой 1" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/ee9ca7/ffffff?text=Ошибка+загрузки';"></div>
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/pBvP3xny/photo-2025-02-15-19-32-00-1.jpg" alt="Фотография с подругой 2" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/ffdde1/333333?text=Ошибка+загрузки';"></div>
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/TMvy35nL/photo-2025-01-27-19-02-30-1.jpg" alt="Фотография с подругой 3" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/f7a3b5/ffffff?text=Ошибка+загрузки';"></div>
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/zWqkmGb4/photo-2024-11-03-10-26-44-1.jpg" alt="Фотография с подругой 4" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/fbc2eb/ffffff?text=Ошибка+загрузки';"></div>
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/d4NsQ6M2/photo-2025-05-25-19-37-54-1.jpg" alt="Фотография с подругой 5" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/a6c1ee/333333?text=Ошибка+загрузки';"></div>
-                        <div class="card rounded-none overflow-hidden shadow-lg"><img src="https://i.ibb.co/b52t1XV7/photo-2024-10-31-16-11-06-1.jpg" alt="Фотография с подругой 6" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/f5a091/ffffff?text=Ошибка+загрузки';"></div>
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=SI](https://placehold.co/40x40/4f46e5/ffffff?text=SI)" alt="Иконка SystemInformer" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">SystemInformer</h3>
+                            <p class="text-gray-400">Поиск инжектированных читов по строкам и анализ системных процессов.</p>
+                        </div>
                     </div>
-                </div>
-            </section>
-
-            <section id="video" class="py-16 md:py-32">
-                <div class="max-w-4xl mx-auto text-center animated-section">
-                    <h2 class="section-title font-russo text-3xl md:text-5xl text-valorant-red mb-12">Видеофайл</h2>
-                    <div class="border-2 border-valorant-red p-1">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <iframe src="https://youtu.be/DItJSCPXCkI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=EV](https://placehold.co/40x40/4f46e5/ffffff?text=EV)" alt="Иконка Everything" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">Everything</h3>
+                            <p class="text-gray-400">Моментальный поиск любых файлов на ПК.</p>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=RS](https://placehold.co/40x40/4f46e5/ffffff?text=RS)" alt="Иконка RegScanner" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">RegScanner</h3>
+                            <p class="text-gray-400">Анализ реестра для поиска следов даже полностью удаленных читов.</p>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=RV](https://placehold.co/40x40/4f46e5/ffffff?text=RV)" alt="Иконка RecentFilesView" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">RecentFilesView</h3>
+                            <p class="text-gray-400">Просмотр недавно использованных файлов на компьютере.</p>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=JT](https://placehold.co/40x40/4f46e5/ffffff?text=JT)" alt="Иконка JournalTrace" class="program-icon">
+                        <div>
+                            <h3 class="font-semibold text-white">JournalTrace</h3>
+                            <p class="text-gray-400">Просмотр временных журналов Windows для обнаружения следов удаленных читов.</p>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <!-- Причины бана -->
+            <section id="ban-reasons" class="card">
+                <h2 class="card-title">Причины бана и их отличия</h2>
+                <p class="mb-6 text-gray-300">Правильная квалификация нарушения — основа справедливого наказания. В таблице ниже представлены основные причины банов и их ключевые отличия.</p>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Причина бана</th>
+                                <th>Описание и ключевые отличия</th>
+                                <th>Срок</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="ban-reason">Читы</span></td>
+                                <td>Активные читы в Minecraft или инжектированные (обнаружены через SystemInformer). Также использование читов по записи (реку).</td>
+                                <td>Зависит от чита</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Читы при проверке</span></td>
+                                <td>Активно использующийся чит найден <span class="highlight">непосредственно во время проверки</span>.</td>
+                                <td>Зависит от чита</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Уклон от проверки</span></td>
+                                <td>Игрок всячески отклоняется, не выполняет просьбы, тянет время.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Игнор проверки</span></td>
+                                <td>Игрок после вызова на проверку <span class="highlight">не совершает никаких действий</span>, имитируя АФК.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Хранение читов</span></td>
+                                <td>На компьютере обнаружен <span class="highlight">неактивный чит</span>. Применяется для версий от 1.12.2 до последней.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Не истек срок использования читов</span></td>
+                                <td>Найдены остатки (например, конфиги), дата которых <span class="highlight">менее 14 дней</span>. Самого чита нет.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Не истек срок удаления читов</span></td>
+                                <td><span class="highlight">Удаленный чит</span> обнаружен (в Shellbag, RegScanner) сроком <span class="highlight">менее 14 дней</span>. <br><strong>Важно:</strong> если был бан за хранение и игрок в тот же день удалил чит, повторно банить нельзя.</td>
+                                <td>50 дней</td>
+                            </tr>
+                             <tr>
+                                <td><span class="ban-reason">Ограничение доступа</span></td>
+                                <td>Родительский контроль, отказ вводить пин-код, не запускается диспетчер задач, программы проверки выдают отказ в доступе.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Сложился на проверке</span></td>
+                                <td>Игрок сложил ресурсы в рамки во время проверки. <span class="highlight">Моментальный бан</span>.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Неадекватное поведение</span></td>
+                                <td>Папки с провокационными названиями/содержимым ("заскамлен"), флуд в чате.</td>
+                                <td>50 дней</td>
+                            </tr>
+                            <tr>
+                                <td><span class="ban-reason">Отказ + оск. адм/род.</span></td>
+                                <td>Любые оскорбления в сторону модератора. Срок зависит от тяжести.</td>
+                                <td>5-20 дней</td>
+                            </tr>
+                             <tr>
+                                <td><span class="ban-reason">Чистка перед проверкой</span></td>
+                                <td>Красный dupeip, подозрительный /hist, при этом Shellbag, Recent, Temp и т.д. почищены. (Убедиться, что Windows не новая).</td>
+                                <td>50 дней</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="mt-6 p-4 bg-indigo-900/30 rounded-lg border border-indigo-500">
+                    <h4 class="font-bold text-lg text-indigo-300 mb-2">Ключевое различие: Использование vs Удаление</h4>
+                    <p class="text-indigo-200">
+                        <strong>"Не истек срок ИСПОЛЬЗОВАНИЯ"</strong>: Вы нашли "улики" от чита — его настройки (конфиги), но самого "орудия преступления" (файла чита) нет. Это доказывает, что чит недавно использовался.
+                        <br><br>
+                        <strong>"Не истек срок УДАЛЕНИЯ"</strong>: Вы нашли запись о том, что "орудие преступления" (файл чита) было уничтожено (удалено) менее 14 дней назад. Самого файла нет, но есть запись о его существовании.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Обнаружение Takker -->
+            <section id="takker" class="card">
+                <h2 class="card-title">Обнаружение Takker</h2>
+                <p class="mb-6 text-gray-300">Takker — это чит, который создает локальный сервер на машине игрока. Его можно обнаружить, проанализировав сетевые подключения процесса Minecraft.</p>
+                <div class="flowchart">
+                    <div class="flowchart-item">
+                        <strong>Шаг 1:</strong> Откройте <span class="highlight">SystemInformer</span> и перейдите в раздел <span class="highlight">Network</span>.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 2:</strong> В поиске впишите <span class="highlight">javaw</span>, чтобы отфильтровать процессы Minecraft.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 3:</strong> Внимательно изучите колонки <span class="highlight">Remote Address</span> и <span class="highlight">Remote Port</span>.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="p-4 bg-gray-800 rounded-lg w-full">
+                        <h4 class="font-bold text-lg mb-2 text-center">Анализ результатов</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-green-900/30 p-4 rounded-lg border border-green-500">
+                                <h5 class="font-semibold text-green-300">Обычное подключение (НЕТ БАНА)</h5>
+                                <p class="text-green-200">В <span class="font-mono">Remote Address</span> указан IP-адрес сервера (например, 50.114.4.207). Это нормальное подключение к игровому серверу.</p>
+                            </div>
+                            <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                                <h5 class="font-semibold text-red-300">Обнаружен Takker (БАН)</h5>
+                                <p class="text-red-200">В <span class="font-mono">Remote Address</span> указано <span class="highlight font-mono">127.0.0.1</span> (локальный хост) и в <span class="font-mono">Remote Port</span> указано <span class="highlight font-mono">25566</span>. Это прямое доказательство работы Takker.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Обнаружение Xameleon -->
+            <section id="xameleon" class="card">
+                <h2 class="card-title">Обнаружение Xameleon (Косвенные признаки)</h2>
+                <p class="mb-6 text-gray-300">Xameleon — хитрый чит, который маскирует использование стороннего ПО. Его можно выявить по ряду косвенных признаков.</p>
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2 text-white">Признак 1: AnyDesk + Телефон</h4>
+                        <p class="text-gray-300">Если игрок подключился с телефона, попросите нажать F3. Если в характеристиках указан <span class="highlight">процессор его ПК</span>, а не телефона — это Xameleon.
+                        <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
+                    </div>
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2 text-white">Признак 2: "Тихий" выход с сервера</h4>
+                        <p class="text-gray-300">Если вы выходите с сервера на устройстве игрока, но в чате <span class="highlight">не появляется сообщение о его выходе</span> — это Xameleon.
+                        <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
+                    </div>
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2 text-white">Признак 3: PojavLauncher + Эмулятор</h4>
+                        <p class="text-gray-300">Игрок использует PojavLauncher, у него отсутствуют кнопки F3 и Debug, он играет с LabyMod и при этом использует эмулятор (например, BlueStacks).
+                        <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Поиск читов в SystemInformer (Memory) -->
+            <section id="systeminformer-memory" class="card">
+                <h2 class="card-title">Поиск читов в SystemInformer (Memory)</h2>
+                <p class="mb-6 text-gray-300">Память процесса игры может содержать следы инжектированных читов. Вот как их найти.</p>
+                <div class="flowchart">
+                    <div class="flowchart-item">
+                        <strong>Шаг 1:</strong> Найдите процесс <span class="highlight">javaw.exe</span> (всегда выбирайте тот, что ниже).
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 2: Проверка DLL.</strong> Нажмите ПКМ -> Miscellaneous -> Unloaded Modules. Ищите подгруженные DLL.
+                        <p class="mt-2 text-sm text-gray-400">Наличие <span class="font-mono text-red-400">al.dll</span>, <span class="font-mono text-red-400">editme.dll</span>, <span class="font-mono text-red-400">1.16.5.dll</span> ведет к бану за <span class="ban-reason">Читы</span>.</p>
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 3: Проверка памяти.</strong> Нажмите дважды ЛКМ по <span class="highlight">javaw.exe</span>, откройте раздел <span class="highlight">Memory</span>.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 4: Поиск по детектам.</strong> В поисковую строку впишите <span class="highlight">детекты на читы</span> из предоставленного списка. Это позволяет найти следы внедренного ПО.
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Проверка папок -->
+            <section id="folder-checks" class="card">
+                <h2 class="card-title">Проверка ключевых папок Minecraft</h2>
+                <p class="mb-6 text-gray-300">Содержимое папок игры может многое рассказать о честности игрока. Важно знать, что и где искать.</p>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-indigo-400">Папка <span class="font-mono">/config/</span></h3>
+                        <p><strong>Что ищем:</strong> Остатки от запрещенных модов/читов.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-300">
+                            <li><strong>Остатки запрещенных модов (< 14 дней):</strong> Бан в соответствии со сроком за сам мод (например, ElytraSwap - 5 дней).</li>
+                            <li><strong>Только конфиги читов (< 14 дней):</strong> Бан за <span class="ban-reason">не истек срок использования читов</span>.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-indigo-400">Папка <span class="font-mono">/mods/</span></h3>
+                        <p><strong>Что ищем:</strong> Запрещенные моды и читы.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-300">
+                            <li><strong>Общее правило:</strong> При нахождении запрещенного мода проверка продолжается до конца.</li>
+                            <li><strong>Исключение:</strong> Если найден чит на больший срок (например, <span class="highlight">FreeCam</span>), можно банить сразу.</li>
+                            <li>Обращайте внимание на подозрительные моды, которые могут быть замаскированными хитбоксами.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-indigo-400">Папка <span class="font-mono">/libraries/</span></h3>
+                        <p><strong>Что ищем:</strong> Папки <span class="font-mono">cabaletta</span> и <span class="font-mono">Github</span>.</p>
+                        <div class="mt-2 p-4 bg-gray-800 rounded-lg">
+                            <h4 class="font-semibold mb-2">Проверка <span class="font-mono">cabaletta</span>:</h4>
+                            <ul class="list-decimal list-inside space-y-2">
+                                <li><strong>Папка < 14 дней, но пустая:</strong> Проверка продолжается.</li>
+                                <li><strong>Папка < 14 дней, есть <span class="font-mono text-red-400">baritone-api.jar</span> или <span class="font-mono text-red-400">fabritone.jar</span>:</strong> Бан на 50 дней за <span class="ban-reason">не истек срок удаления читов</span>.</li>
+                                <li><strong>Папка > 14 дней:</strong> Проверка продолжается.</li>
+                            </ul>
+                            <h4 class="font-semibold mt-4 mb-2">Проверка <span class="font-mono">com/Github</span>:</h4>
+                            <p>Если в папке <span class="font-mono">com/Github</span> находится <span class="highlight">установщик чита</span>, банить на 50 дней за <span class="ban-reason">хранение читов</span>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Проверка веса версий -->
+            <section id="version-weight" class="card">
+                <h2 class="card-title">Проверка веса версий Minecraft</h2>
+                <p class="mb-6 text-gray-300">Нестандартный вес файла версии часто указывает на встроенный чит. Однако есть исключения.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">Стандартные веса:</h4>
+                        <ul class="space-y-1">
+                            <li><strong>1.12.2:</strong> <span class="highlight">9 942 кб</span></li>
+                            <li><strong>1.16.5:</strong> <span class="highlight">17 136 кб</span></li>
+                            <li><strong>1.19.4:</strong> <span class="highlight">22 927 кб</span></li>
+                            <li><strong>1.20.4:</strong> <span class="highlight">23 873 кб</span></li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-500">
+                        <h4 class="font-semibold text-lg mb-2 text-green-300">Исключения (НЕТ БАНА):</h4>
+                        <ul class="space-y-1 text-green-200">
+                            <li><span class="font-mono">ABSA.jar</span> весом ~<span class="highlight">118 кб</span> (это абстракт).</li>
+                            <li><span class="font-mono">1.16.5.jar</span>, если при открытии в WinRar есть папка <span class="highlight">Fever</span> (это FeverVisual).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Обнаружение нестандартного OptiFine -->
+            <section id="optifine" class="card">
+                <h2 class="card-title">Обнаружение нестандартного OptiFine</h2>
+                <p class="mb-6 text-gray-300">Особый случай — OptiFine с весом <span class="highlight font-mono">134 719 кб</span>. Это известный чит Expensive Crack.</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                    <div class="text-center p-4">
+                        <p class="text-2xl font-bold font-mono">134 719 кб</p>
+                        <p class="text-gray-400">Обнаружен OptiFine</p>
+                    </div>
+                    <div class="text-2xl text-gray-500">→</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
+                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                            <h5 class="font-semibold text-red-300">Сценарий 1: Используется</h5>
+                            <p class="text-red-200">Если игрок <span class="highlight">активно использует</span> этот OptiFine в игре.</p>
+                            <p class="mt-2 font-bold">Вердикт: <span class="ban-reason">Читы</span></p>
+                        </div>
+                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-500">
+                            <h5 class="font-semibold text-yellow-300">Сценарий 2: Хранится</h5>
+                            <p class="text-yellow-200">Если файл просто <span class="highlight">лежит на компьютере</span>, но не используется.</p>
+                            <p class="mt-2 font-bold">Вердикт: <span class="ban-reason">Хранение читов</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Использование батников на чистку -->
+            <section id="bat-files" class="card">
+                <h2 class="card-title">Использование батников на чистку (.bat)</h2>
+                <p class="mb-6 text-gray-300">Батники для очистки логов и следов — серьезное нарушение, приравниваемое к попытке скрыть читы.</p>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                            <h5 class="font-semibold text-red-300">Использование батника</h5>
+                            <p class="text-red-200">Бан на <span class="highlight">50 дней</span>.</p>
+                        </div>
+                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-500">
+                            <h5 class="font-semibold text-yellow-300">Хранение батника</h5>
+                             <p class="text-yellow-200">Бан на <span class="highlight">20 дней</span>.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">Как найти:</h4>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong>Everything:</strong> В поиске вписать <code class="bg-gray-700 p-1 rounded">.bat size:14kb</code>.</li>
+                            <li><strong>Косвенные признаки:</strong> Подозрительный <code class="bg-gray-700 p-1 rounded">/hist</code> или <code class="bg-gray-700 p-1 rounded">/dupeip</code>, пустые ShellBag, RecentFileView, очищенные папки Temp и Recent. Этого достаточно для бана на 50 дней.</li>
+                            <li><strong>Самописные батники:</strong> Файлы типа "Cache Cleaner.bat" или "123.bat" (вес ~1кб). Проверяйте их содержимое (ПКМ -> Изменить), ищите команды на удаление файлов (<span class="font-mono text-red-400">del</span>, <span class="font-mono text-red-400">deltree</span>). Если JournalTrace почищен, это доказывает использование.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Условия вызова игрока на проверку -->
+            <section id="call-rules" class="card">
+                <h2 class="card-title">Условия вызова игрока на проверку</h2>
+                <p class="mb-6 text-gray-300">Существуют строгие правила, когда можно и нельзя вызывать игрока на проверку, чтобы избежать несправедливых банов.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2">Основное правило (АФК)</h4>
+                        <p>Нельзя вызывать игрока, если он в АФК <span class="highlight">> 10 секунд</span>. Если игрок двигался и встал в АФК, у модератора есть <span class="highlight">ровно 10 секунд</span>, чтобы его вызвать. Нарушение — устный выговор.</p>
+                    </div>
+                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-500">
+                        <h4 class="font-semibold text-lg mb-2 text-green-300">Исключение (КТ + DupeIP)</h4>
+                        <p class="text-green-200">Если игрок в боевом теге (КТ) и АФК, но <code class="bg-gray-700 p-1 rounded">/dupeip</code> показывает баны за читы на других аккаунтах, его <span class="highlight">можно вызвать</span> по истечении КТ, даже нарушая правило 10 секунд. Проверка <code class="bg-gray-700 p-1 rounded">/dupeip</code> должна быть на записи.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Время на проверке (AnyDesk) -->
+            <section id="anydesk-time" class="card">
+                <h2 class="card-title">Временные лимиты на проверке (AnyDesk)</h2>
+                <p class="mb-6 text-gray-300">Соблюдение временных рамок необходимо для предотвращения затягивания проверки.</p>
+                 <ul class="list-none space-y-3">
+                    <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">1</span><div><strong>Отправка AnyDesk:</strong> <span class="highlight">5 минут</span> после вызова.</div></li>
+                    <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">2</span><div><strong>Принятие запроса:</strong> до <span class="highlight">5 минут</span> (+1 минута, если время вышло).</div></li>
+                    <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">3</span><div><strong>Устранение проблем:</strong> <span class="highlight">3 минуты</span>.</div></li>
+                    <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">4</span><div><strong>Переподключение после разрыва:</strong> до <span class="highlight">5 минут</span> (+1 минута на принятие).</div></li>
+                    <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">5</span><div><strong>Неверный AnyDesk:</strong> Модератор ждет до конца времени проверки.</div></li>
+                </ul>
+                <div class="mt-4 p-3 bg-red-900/30 rounded-lg border border-red-500">
+                    <p class="text-red-200"><strong>Важно:</strong> Запись уклона/игнора должна быть <span class="highlight">не менее 5 минут</span>, иначе модератор получит устный выговор.</p>
+                </div>
+            </section>
+
+             <!-- Проверка телефона через AnyDesk -->
+            <section id="phone-check" class="card">
+                <h2 class="card-title">Проверка телефона через AnyDesk</h2>
+                <p class="mb-6 text-gray-300">Проверка мобильных устройств требует особого подхода.</p>
+                <div class="flowchart">
+                    <div class="flowchart-item">
+                        <strong>Шаг 1:</strong> Попросите игрока открыть Minecraft.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 2:</strong> Запросите доступ к файлам. Напишите в чат, чтобы игрок выдал все права доступа (они должны гореть красным).
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-item">
+                        <strong>Шаг 3:</strong> Проверьте папки <span class="highlight">Downloads</span>, <span class="highlight">Documents</span>, <span class="highlight">RecycleBin</span>.
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                     <div class="flowchart-item">
+                        <strong>Шаг 4:</strong> В начале или конце проверки попросите выйти с сервера и показать IP-адреса подключений.
+                    </div>
+                    <div class="mt-4 p-3 bg-yellow-900/30 rounded-lg border border-yellow-500 w-full">
+                        <p class="text-yellow-200"><strong>Если игрок "тупит":</strong> Если после объяснений игрок не предоставляет доступ, дождитесь истечения времени проверки (+1-2 минуты) и баньте за <span class="ban-reason">Уклон от проверки [время вышло]</span>.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Помеха проведению проверки -->
+            <section id="interference" class="card">
+                <h2 class="card-title">Помеха проведению проверки</h2>
+                <p>Если игрок, вызванный на проверку, начинает закапывать модератора, или другой игрок мешает, давая КТ, это расценивается как помеха.</p>
+                <p class="mt-4"><strong>Наказание:</strong> Бан на <span class="highlight">10 дней</span>. Второму игроку сначала выдается предупреждение; если он продолжает — его также банят на 10 дней.</p>
+            </section>
+            
+            <!-- Признание игрока -->
+            <section id="confession" class="card">
+                <h2 class="card-title">Признание игрока в использовании/хранении читов</h2>
+                <p>Если игрок сам признается в нарушении (например, "я использовал читы 10 дней назад" или "у меня хранение"), модератор <span class="highlight">все равно обязан его проверить</span>.</p>
+                <p class="mt-4"><strong>Наказание:</strong> Бан на <span class="highlight">46 дней</span> с указанием соответствующей причины. При таком бане тиммейту бан <span class="highlight">НЕ ВЫДАЕТСЯ</span>.</p>
+            </section>
+
+            <!-- Особые проверки -->
+            <section id="special-checks" class="card">
+                <h2 class="card-title">Особые случаи проверок: D.HELPER и FunPay</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2">Проверка D.HELPER'ов</h4>
+                         <ul class="list-disc list-inside space-y-2">
+                            <li><span class="highlight">8 минут</span> на предоставление AnyDesk.</li>
+                            <li>Модератор обязан отвечать на вопросы, касающиеся проверки.</li>
+                            <li>Если D.HELPER встал в АФК после вызова и не отвечает <span class="highlight">5 минут</span>, его можно банить.</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-gray-800 rounded-lg">
+                        <h4 class="font-semibold text-lg mb-2">Проверка на FunPay</h4>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><span class="highlight">Запрещено</span> просить игрока заходить на аккаунты по никам/номерам из истории авторизации.</li>
+                            <li><span class="highlight">Можно</span> просить зайти, если в окне авторизации есть сохраненная почта.</li>
+                            <li>Если игрок не заходит на почту в течение <span class="highlight">5 минут</span>, можно банить за <span class="ban-reason">Уклон от проверки FunPay</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Аналогия -->
+            <section id="analogy" class="card">
+                <h2 class="card-title">Аналогия для закрепления понимания</h2>
+                <p class="mb-4 text-gray-300">Представьте, что вы — детектив, а компьютер игрока — это место преступления.</p>
+                <div class="space-y-3">
+                    <p><strong>SystemInformer</strong> — ваш криминалистический сканер, ищущий невидимые следы (инъекции DLL) и "отпечатки пальцев" (детекты в памяти), пока место преступления "горячее".</p>
+                    <p><strong>Shellbag, RecentFilesView, JournalTrace</strong> — это архивы и журналы, где хранятся записи о всех действиях: что перемещалось, что использовалось, даже если это уже "убрали".</p>
+                    <p><strong>RegScanner</strong> — старый, но обширный архив, который может показать давно забытые записи. Его данные могут быть неточны, поэтому требуют перепроверки.</p>
+                    <p><strong>Everything</strong> — универсальная поисковая система, мгновенно находящая любые "вещественные доказательства" (файлы) на всем "месте преступления".</p>
+                </div>
+            </section>
         </main>
-
-        <footer class="text-center py-12 border-t-2 border-gray-800">
-            <p class="text-gray-500 font-russo">Поздравление <span class="text-valorant-red">с любовью</span> Юлечке! А что это тут такое... <span id="surprise-button">окак</span>?</p>
-        </footer>
-    </div>
-    
-    <div id="surprise-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal"></button>
-            <img src="https://i.ibb.co/B2Kv784t/resized-687e425ce01c8.jpg" alt="Фото-сюрприз">
-        </div>
-    </div>
-    
-    <div id="quiz-photo-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal"></button>
-            <img src="https://i.ibb.co/Qjzq08GL/photo-2025-07-21-19-58-06-1.jpg" alt="Фото-сюрприз для викторины">
-        </div>
-    </div>
-
-    <div id="quiz-final-animation">
-        <div id="end-text" class="font-russo">КОНЕЦ!</div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- ОСНОВНАЯ ЛОГИКА ---
-            const preloader = document.getElementById('preloader');
-            const glitchTextElement = document.getElementById('glitch-text');
-            const final_text = "С днем рождения, любимка!";
+        // Скрипт для плавной прокрутки и подсветки активного пункта меню
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('#nav-menu a');
+            const sections = document.querySelectorAll('main section');
 
-            function hidePreloader() {
-                preloader.classList.add('preloader-fade-out');
-                setTimeout(() => { preloader.style.display = 'none'; }, 1000);
-            }
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
 
-            function decodeEffect(element, text) {
-                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
-                let interval = null;
-                let iteration = 0;
-                interval = setInterval(() => {
-                    element.innerText = text.split("").map((letter, index) => {
-                        if (index < iteration) return text[index];
-                        if (text[index] === ' ') return ' ';
-                        return letters[Math.floor(Math.random() * letters.length)];
-                    }).join("");
-                    if (iteration >= text.length) {
-                        clearInterval(interval);
-                        setTimeout(hidePreloader, 1500);
-                    }
-                    iteration += 1 / 2;
-                }, 35);
-            }
-
-            setTimeout(() => {
-                glitchTextElement.style.opacity = 1;
-                decodeEffect(glitchTextElement, final_text);
-            }, 1000);
-
-            const animatedSections = document.querySelectorAll('.animated-section');
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target);
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
                     }
                 });
-            }, { threshold: 0.1 });
-            animatedSections.forEach(section => observer.observe(section));
+            }, observerOptions);
 
-            const parallaxBg = document.getElementById('parallax-bg');
-            window.addEventListener('scroll', function() {
-                const offset = window.pageYOffset;
-                parallaxBg.style.transform = `translateY(${offset * 0.5}px)`;
+            sections.forEach(section => {
+                observer.observe(section);
             });
 
-            // --- ОБРАБОТЧИКИ МОДАЛЬНЫХ ОКОН ---
-            function setupModal(triggerId, modalId) {
-                const trigger = document.getElementById(triggerId);
-                const modal = document.getElementById(modalId);
-                if (!trigger || !modal) return;
-
-                const closeModalButton = modal.querySelector('.close-modal');
-                trigger.addEventListener('click', () => modal.classList.add('active'));
-                closeModalButton.addEventListener('click', () => modal.classList.remove('active'));
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) modal.classList.remove('active');
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
-            }
-            setupModal('surprise-button', 'surprise-modal');
-
-            // --- ЛОГИКА ДЛЯ ОБЛАКА ТЕГОВ ---
-            const tags = ['геймерша', 'умница', 'красавица', 'веселая', 'добрая', 'умная', 'валорантерша', 'топ1валоранта', 'сладкоежка', 'красивые глаза', 'ангельский голос', 'прекрасный художник', 'черноволосая', 'любит басика'];
-            const tagCloud = document.getElementById('tag-cloud');
-            tags.forEach(tagText => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'tag';
-                tagElement.textContent = tagText;
-                const size = Math.random() * 1.5 + 0.8;
-                tagElement.style.fontSize = `${size}rem`;
-                tagElement.style.color = Math.random() > 0.6 ? 'var(--valorant-red)' : 'var(--valorant-light)';
-                tagCloud.appendChild(tagElement);
             });
-
-            // --- ЛОГИКА ДЛЯ ВИКТОРИНЫ ---
-            const quizData = [
-                { question: "Какую фразу Юля говорит чаще всего?", options: ["ватафак", "ого", "окак", "ода"], correct: 2 },
-                { question: "Кого Юлечек любит больше всего?", options: ["Вазика", "Басика", "Тазика", "Зазика"], correct: 1, action: 'showPhoto' },
-                { question: "Что Юлечка любит больше всего?", options: ["Сладкое", "Валорант", "Краситься", "Сеструху"], correct: 'all' },
-                { question: "Какие скины Юля больше всего предпочитает в валоранте?", options: ["Грёзы Эвори", "RGX 11z Pro", "Араксис", "Таинственный цветок"], correct: 0 },
-                { question: "Когда мы с тобой познакомились?", options: ["13.09.2024", "25.08.2024", "11.01.2024", "25.10.2024"], correct: 3 },
-                { question: "Какой фильм мы смотрели вместе?", options: ["Волк с Уолл-Стрит", "Бойцовский клуб", "Субстанция", "Лимонные девочки"], correct: 2 },
-                { question: "Идеальный вечер для Юли — это:", options: ["Катки в Valorant до утра", "Уютный вечер с сериалом и вкусняшками", "Шумная вечеринка с друзьями", "Поход за новым маникюром"], correct: 0 },
-                { question: "Ее секретное оружие в споре — это:", options: ["Неопровержимые факты и логика", '"Я тебя поняла."', 'Фраза "Ну я же девочка!"', "Смешной мем по теме"], correct: 1 },
-                { question: "Какой титул ей подходит больше всего?", options: ["Императрица хэдшотов", "Королева нейл-арта", "Повелительница кота Басика", 'Герцогиня "еще-один-кусочек-тортика"'], correct: 2 },
-                { question: "Какую игру больше всего любит Юлечка?", options: ["Валорант", "Валорант", "Валорант", "Валорант"], correct: 'all', action: 'final' }
-            ];
-
-            let currentQuestionIndex = 0;
-            const quizQuestionText = document.getElementById('quiz-question-text');
-            const quizOptionsContainer = document.getElementById('quiz-options-container');
-            const quizPhotoModal = document.getElementById('quiz-photo-modal');
-            const quizFinalAnimation = document.getElementById('quiz-final-animation');
-
-            function showQuizPhoto() {
-                quizPhotoModal.classList.add('active');
-                const closeBtn = quizPhotoModal.querySelector('.close-modal');
-                const closeOverlay = (e) => {
-                    if(e.target === quizPhotoModal || e.target === closeBtn) {
-                        quizPhotoModal.classList.remove('active');
-                        quizPhotoModal.removeEventListener('click', closeOverlay);
-                    }
-                };
-                quizPhotoModal.addEventListener('click', closeOverlay);
-            }
-
-            function startFinalAnimation() {
-                quizFinalAnimation.style.display = 'flex';
-                for(let i = 0; i < 30; i++) {
-                    const word = document.createElement('div');
-                    word.textContent = 'VALORANT';
-                    word.className = 'valorant-word';
-                    word.style.top = `${Math.random() * 100}vh`;
-                    word.style.left = `${Math.random() * 100}vw`;
-                    word.style.fontSize = `${Math.random() * 4 + 2}rem`;
-                    word.style.animationDelay = `${Math.random() * 2}s`;
-                    quizFinalAnimation.appendChild(word);
-                }
-                setTimeout(() => {
-                    quizFinalAnimation.style.display = 'none';
-                    quizFinalAnimation.innerHTML = '<div id="end-text" class="font-russo">КОНЕЦ!</div>'; // Reset for next time
-                }, 5500);
-            }
-
-            function handleOptionClick(e) {
-                const selectedOptionIndex = parseInt(e.target.dataset.index);
-                const questionData = quizData[currentQuestionIndex];
-                const options = quizOptionsContainer.querySelectorAll('.quiz-option');
-
-                let isCorrect = false;
-                if (questionData.correct === 'all') {
-                    isCorrect = true;
-                } else {
-                    isCorrect = selectedOptionIndex === questionData.correct;
-                }
-                
-                options.forEach((option, index) => {
-                    option.classList.add('disabled');
-                    if (questionData.correct === 'all') {
-                        option.classList.add('correct');
-                    } else if (index === questionData.correct) {
-                        option.classList.add('correct');
-                    } else if (index === selectedOptionIndex) {
-                        option.classList.add('incorrect');
-                    }
-                });
-
-                if (isCorrect && questionData.action === 'showPhoto') {
-                    setTimeout(showQuizPhoto, 500);
-                }
-
-                if (questionData.action === 'final') {
-                    setTimeout(startFinalAnimation, 1000);
-                    return;
-                }
-                
-                setTimeout(() => {
-                    currentQuestionIndex++;
-                    if (currentQuestionIndex < quizData.length) {
-                        renderQuestion();
-                    } else {
-                        quizQuestionText.textContent = "Тест пройден!";
-                        quizOptionsContainer.innerHTML = "";
-                    }
-                }, 2000);
-            }
-
-            function renderQuestion() {
-                const questionData = quizData[currentQuestionIndex];
-                quizQuestionText.textContent = questionData.question;
-                quizOptionsContainer.innerHTML = '';
-                questionData.options.forEach((optionText, index) => {
-                    const optionElement = document.createElement('div');
-                    optionElement.className = 'quiz-option';
-                    optionElement.textContent = optionText;
-                    optionElement.dataset.index = index;
-                    optionElement.addEventListener('click', handleOptionClick);
-                    quizOptionsContainer.appendChild(optionElement);
-                });
-            }
-
-            renderQuestion();
         });
     </script>
 </body>
