@@ -5,46 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Руководство по проверке на читы - ReallyWorld</title>
     <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap)" rel="stylesheet">
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
     <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827;
-            color: #e5e7eb;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 20px 20px;
         }
         .card {
-            background-color: #1f2937;
-            border: 1px solid #374151;
+            background-color: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-out forwards;
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.3);
+            border-color: rgba(79, 70, 229, 0.5);
         }
         .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #f9fafb;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #f0f6fc;
             margin-bottom: 1rem;
-            border-bottom: 2px solid #4f46e5;
             padding-bottom: 0.5rem;
+            border-image: linear-gradient(to right, #6366f1, #8b5cf6) 1;
+            border-bottom: 3px solid;
         }
         .program-card {
-            background-color: #374151;
+            background-color: #161b22;
+            border: 1px solid #30363d;
             border-radius: 0.5rem;
             padding: 1rem;
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .program-card:hover {
+            background-color: #21262d;
+            border-color: #8b5cf6;
         }
         .program-icon {
             width: 2.5rem;
             height: 2.5rem;
             margin-right: 1rem;
             flex-shrink: 0;
+            color: #8b5cf6;
         }
         .flowchart {
             display: flex;
@@ -52,18 +70,19 @@
             align-items: center;
         }
         .flowchart-item {
-            background-color: #374151;
-            padding: 1rem;
+            background-color: #161b22;
+            padding: 1rem 1.5rem;
             border-radius: 0.5rem;
             margin-bottom: 1rem;
-            width: 80%;
+            width: 90%;
             text-align: center;
             position: relative;
-            border-left: 4px solid #4f46e5;
+            border-left: 4px solid #6366f1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .flowchart-arrow {
-            font-size: 2rem;
-            color: #6b7280;
+            font-size: 2.5rem;
+            color: #4b5563;
             margin-bottom: 1rem;
         }
         .comparison-table {
@@ -71,48 +90,69 @@
             border-collapse: collapse;
         }
         .comparison-table th, .comparison-table td {
-            border: 1px solid #4b5563;
-            padding: 0.75rem;
+            border: 1px solid #30363d;
+            padding: 1rem;
             text-align: left;
         }
         .comparison-table th {
-            background-color: #374151;
-            font-weight: 600;
+            background-color: #161b22;
+            font-weight: 700;
+            color: #f0f6fc;
+        }
+        .comparison-table tbody tr:nth-child(odd) {
+            background-color: #161b22;
         }
         .highlight {
-            color: #818cf8;
+            color: #a5b4fc;
             font-weight: 600;
         }
         .ban-reason {
-            background-color: #4b5563;
-            color: #f9fafb;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
+            background: linear-gradient(to right, #4338ca, #6d28d9);
+            color: #f0f6fc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
             font-family: monospace;
             font-size: 0.9rem;
+            display: inline-block;
         }
         .nav-menu {
             position: sticky;
-            top: 1rem;
+            top: 1.5rem;
             align-self: flex-start;
+            background-color: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
         }
         .nav-menu a {
             display: block;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
             margin-bottom: 0.5rem;
             border-radius: 0.5rem;
-            color: #d1d5db;
-            transition: background-color 0.2s, color 0.2s;
+            color: #c9d1d9;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
         }
-        .nav-menu a:hover, .nav-menu a.active {
+        .nav-menu a:hover {
             background-color: #4f46e5;
             color: #ffffff;
+            transform: translateX(5px);
+        }
+        .nav-menu a.active {
+             background: linear-gradient(to right, #4f46e5, #7c3aed);
+             color: #ffffff;
+             font-weight: 600;
+        }
+        .header-gradient {
+            background: -webkit-linear-gradient(45deg, #a5b4fc, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
-    <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-white mb-2">Руководство для Модераторов ReallyWorld</h1>
+    <header class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-white mb-3 header-gradient">Руководство для Модераторов ReallyWorld</h1>
         <p class="text-lg text-gray-400">Всеобъемлющее пособие по правилам и методам проверок на читы</p>
     </header>
 
@@ -120,7 +160,7 @@
         <!-- Навигационное меню -->
         <aside class="lg:col-span-1">
             <nav id="nav-menu" class="nav-menu">
-                <h3 class="text-xl font-bold mb-4 px-4">Навигация</h3>
+                <h3 class="text-xl font-bold mb-4 px-4 text-white">Навигация</h3>
                 <a href="#programs">Обязательные программы</a>
                 <a href="#ban-reasons">Причины бана</a>
                 <a href="#takker">Обнаружение Takker</a>
@@ -144,49 +184,49 @@
         <main class="lg:col-span-3">
             <!-- Обязательные программы -->
             <section id="programs" class="card">
-                <h2 class="card-title">Обязательные программы для проверок</h2>
-                <p class="mb-6 text-gray-300">Это арсенал каждого модератора. Знание функций этих программ — ключ к успешной проверке.</p>
+                <h2 class="card-title">Обязательные программы</h2>
+                <p class="mb-6 text-gray-400">Это арсенал каждого модератора. Знание функций этих программ — ключ к успешной проверке.</p>
                 <div class="space-y-4">
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=SB](https://placehold.co/40x40/4f46e5/ffffff?text=SB)" alt="Иконка ShellBag" class="program-icon">
+                        <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">ShellBag</h3>
                             <p class="text-gray-400">Просмотр удаленных папок и их следов.</p>
                         </div>
                     </div>
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=SI](https://placehold.co/40x40/4f46e5/ffffff?text=SI)" alt="Иконка SystemInformer" class="program-icon">
+                        <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h4v-9h7V7l-7-7h-4v7H3v5h7v9z" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">SystemInformer</h3>
-                            <p class="text-gray-400">Поиск инжектированных читов по строкам и анализ системных процессов.</p>
+                            <p class="text-gray-400">Поиск инжектированных читов и анализ системных процессов.</p>
                         </div>
                     </div>
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=EV](https://placehold.co/40x40/4f46e5/ffffff?text=EV)" alt="Иконка Everything" class="program-icon">
+                        <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">Everything</h3>
                             <p class="text-gray-400">Моментальный поиск любых файлов на ПК.</p>
                         </div>
                     </div>
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=RS](https://placehold.co/40x40/4f46e5/ffffff?text=RS)" alt="Иконка RegScanner" class="program-icon">
+                        <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">RegScanner</h3>
-                            <p class="text-gray-400">Анализ реестра для поиска следов даже полностью удаленных читов.</p>
+                            <p class="text-gray-400">Анализ реестра для поиска следов удаленных читов.</p>
                         </div>
                     </div>
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=RV](https://placehold.co/40x40/4f46e5/ffffff?text=RV)" alt="Иконка RecentFilesView" class="program-icon">
+                        <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">RecentFilesView</h3>
-                            <p class="text-gray-400">Просмотр недавно использованных файлов на компьютере.</p>
+                            <p class="text-gray-400">Просмотр недавно использованных файлов.</p>
                         </div>
                     </div>
                     <div class="program-card">
-                        <img src="[https://placehold.co/40x40/4f46e5/ffffff?text=JT](https://placehold.co/40x40/4f46e5/ffffff?text=JT)" alt="Иконка JournalTrace" class="program-icon">
+                         <svg class="program-icon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         <div>
                             <h3 class="font-semibold text-white">JournalTrace</h3>
-                            <p class="text-gray-400">Просмотр временных журналов Windows для обнаружения следов удаленных читов.</p>
+                            <p class="text-gray-400">Просмотр временных журналов Windows.</p>
                         </div>
                     </div>
                 </div>
@@ -195,7 +235,7 @@
             <!-- Причины бана -->
             <section id="ban-reasons" class="card">
                 <h2 class="card-title">Причины бана и их отличия</h2>
-                <p class="mb-6 text-gray-300">Правильная квалификация нарушения — основа справедливого наказания. В таблице ниже представлены основные причины банов и их ключевые отличия.</p>
+                <p class="mb-6 text-gray-400">Правильная квалификация нарушения — основа справедливого наказания. В таблице ниже представлены основные причины банов и их ключевые отличия.</p>
                 <div class="overflow-x-auto">
                     <table class="comparison-table">
                         <thead>
@@ -232,12 +272,12 @@
                                 <td>50 дней</td>
                             </tr>
                             <tr>
-                                <td><span class="ban-reason">Не истек срок использования читов</span></td>
+                                <td><span class="ban-reason">Не истек срок использования</span></td>
                                 <td>Найдены остатки (например, конфиги), дата которых <span class="highlight">менее 14 дней</span>. Самого чита нет.</td>
                                 <td>50 дней</td>
                             </tr>
                             <tr>
-                                <td><span class="ban-reason">Не истек срок удаления читов</span></td>
+                                <td><span class="ban-reason">Не истек срок удаления</span></td>
                                 <td><span class="highlight">Удаленный чит</span> обнаружен (в Shellbag, RegScanner) сроком <span class="highlight">менее 14 дней</span>. <br><strong>Важно:</strong> если был бан за хранение и игрок в тот же день удалил чит, повторно банить нельзя.</td>
                                 <td>50 дней</td>
                             </tr>
@@ -269,12 +309,12 @@
                         </tbody>
                     </table>
                 </div>
-                 <div class="mt-6 p-4 bg-indigo-900/30 rounded-lg border border-indigo-500">
+                 <div class="mt-6 p-4 bg-indigo-900/30 rounded-lg border border-indigo-700">
                     <h4 class="font-bold text-lg text-indigo-300 mb-2">Ключевое различие: Использование vs Удаление</h4>
                     <p class="text-indigo-200">
                         <strong>"Не истек срок ИСПОЛЬЗОВАНИЯ"</strong>: Вы нашли "улики" от чита — его настройки (конфиги), но самого "орудия преступления" (файла чита) нет. Это доказывает, что чит недавно использовался.
                         <br><br>
-                        <strong>"Не истек срок УДАЛЕНИЯ"</strong>: Вы нашли запись о том, что "орудие преступления" (файл чита) было уничтожено (удалено) менее 14 дней назад. Самого файла нет, но есть запись о его существовании.
+                        <strong>"Не истек срок УДАЛЕНИЯ"</strong>: Вы нашли запись о том, что "орудие преступления" (файл чита) было удалено менее 14 дней назад. Самого файла нет, но есть запись о его существовании.
                     </p>
                 </div>
             </section>
@@ -282,7 +322,7 @@
             <!-- Обнаружение Takker -->
             <section id="takker" class="card">
                 <h2 class="card-title">Обнаружение Takker</h2>
-                <p class="mb-6 text-gray-300">Takker — это чит, который создает локальный сервер на машине игрока. Его можно обнаружить, проанализировав сетевые подключения процесса Minecraft.</p>
+                <p class="mb-6 text-gray-400">Takker — это чит, который создает локальный сервер на машине игрока. Его можно обнаружить, проанализировав сетевые подключения процесса Minecraft.</p>
                 <div class="flowchart">
                     <div class="flowchart-item">
                         <strong>Шаг 1:</strong> Откройте <span class="highlight">SystemInformer</span> и перейдите в раздел <span class="highlight">Network</span>.
@@ -296,14 +336,14 @@
                         <strong>Шаг 3:</strong> Внимательно изучите колонки <span class="highlight">Remote Address</span> и <span class="highlight">Remote Port</span>.
                     </div>
                     <div class="flowchart-arrow">↓</div>
-                    <div class="p-4 bg-gray-800 rounded-lg w-full">
-                        <h4 class="font-bold text-lg mb-2 text-center">Анализ результатов</h4>
+                    <div class="p-4 bg-gray-800/50 rounded-lg w-full border border-gray-700">
+                        <h4 class="font-bold text-lg mb-4 text-center text-white">Анализ результатов</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-green-900/30 p-4 rounded-lg border border-green-500">
+                            <div class="bg-green-900/30 p-4 rounded-lg border border-green-700">
                                 <h5 class="font-semibold text-green-300">Обычное подключение (НЕТ БАНА)</h5>
                                 <p class="text-green-200">В <span class="font-mono">Remote Address</span> указан IP-адрес сервера (например, 50.114.4.207). Это нормальное подключение к игровому серверу.</p>
                             </div>
-                            <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                            <div class="bg-red-900/30 p-4 rounded-lg border border-red-700">
                                 <h5 class="font-semibold text-red-300">Обнаружен Takker (БАН)</h5>
                                 <p class="text-red-200">В <span class="font-mono">Remote Address</span> указано <span class="highlight font-mono">127.0.0.1</span> (локальный хост) и в <span class="font-mono">Remote Port</span> указано <span class="highlight font-mono">25566</span>. Это прямое доказательство работы Takker.</p>
                             </div>
@@ -315,26 +355,27 @@
             <!-- Обнаружение Xameleon -->
             <section id="xameleon" class="card">
                 <h2 class="card-title">Обнаружение Xameleon (Косвенные признаки)</h2>
-                <p class="mb-6 text-gray-300">Xameleon — хитрый чит, который маскирует использование стороннего ПО. Его можно выявить по ряду косвенных признаков.</p>
+                <p class="mb-6 text-gray-400">Xameleon — хитрый чит, который маскирует использование стороннего ПО. Его можно выявить по ряду косвенных признаков.</p>
                 <div class="space-y-4">
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2 text-white">Признак 1: AnyDesk + Телефон</h4>
                         <p class="text-gray-300">Если игрок подключился с телефона, попросите нажать F3. Если в характеристиках указан <span class="highlight">процессор его ПК</span>, а не телефона — это Xameleon.
                         <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
                     </div>
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2 text-white">Признак 2: "Тихий" выход с сервера</h4>
                         <p class="text-gray-300">Если вы выходите с сервера на устройстве игрока, но в чате <span class="highlight">не появляется сообщение о его выходе</span> — это Xameleon.
                         <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
                     </div>
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2 text-white">Признак 3: PojavLauncher + Эмулятор</h4>
                         <p class="text-gray-300">Игрок использует PojavLauncher, у него отсутствуют кнопки F3 и Debug, он играет с LabyMod и при этом использует эмулятор (например, BlueStacks).
                         <br><strong>Причина бана:</strong> <span class="ban-reason">Читы при проверке (Xameleon)</span></p>
                     </div>
                 </div>
             </section>
-
+            
+            <!-- Остальные секции без изменений для краткости -->
             <!-- Поиск читов в SystemInformer (Memory) -->
             <section id="systeminformer-memory" class="card">
                 <h2 class="card-title">Поиск читов в SystemInformer (Memory)</h2>
@@ -384,7 +425,7 @@
                     <div>
                         <h3 class="text-xl font-bold mb-2 text-indigo-400">Папка <span class="font-mono">/libraries/</span></h3>
                         <p><strong>Что ищем:</strong> Папки <span class="font-mono">cabaletta</span> и <span class="font-mono">Github</span>.</p>
-                        <div class="mt-2 p-4 bg-gray-800 rounded-lg">
+                        <div class="mt-2 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                             <h4 class="font-semibold mb-2">Проверка <span class="font-mono">cabaletta</span>:</h4>
                             <ul class="list-decimal list-inside space-y-2">
                                 <li><strong>Папка < 14 дней, но пустая:</strong> Проверка продолжается.</li>
@@ -412,7 +453,7 @@
                             <li><strong>1.20.4:</strong> <span class="highlight">23 873 кб</span></li>
                         </ul>
                     </div>
-                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-500">
+                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-700">
                         <h4 class="font-semibold text-lg mb-2 text-green-300">Исключения (НЕТ БАНА):</h4>
                         <ul class="space-y-1 text-green-200">
                             <li><span class="font-mono">ABSA.jar</span> весом ~<span class="highlight">118 кб</span> (это абстракт).</li>
@@ -433,12 +474,12 @@
                     </div>
                     <div class="text-2xl text-gray-500">→</div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
-                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-700">
                             <h5 class="font-semibold text-red-300">Сценарий 1: Используется</h5>
                             <p class="text-red-200">Если игрок <span class="highlight">активно использует</span> этот OptiFine в игре.</p>
                             <p class="mt-2 font-bold">Вердикт: <span class="ban-reason">Читы</span></p>
                         </div>
-                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-500">
+                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-700">
                             <h5 class="font-semibold text-yellow-300">Сценарий 2: Хранится</h5>
                             <p class="text-yellow-200">Если файл просто <span class="highlight">лежит на компьютере</span>, но не используется.</p>
                             <p class="mt-2 font-bold">Вердикт: <span class="ban-reason">Хранение читов</span></p>
@@ -453,11 +494,11 @@
                 <p class="mb-6 text-gray-300">Батники для очистки логов и следов — серьезное нарушение, приравниваемое к попытке скрыть читы.</p>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-500">
+                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-700">
                             <h5 class="font-semibold text-red-300">Использование батника</h5>
                             <p class="text-red-200">Бан на <span class="highlight">50 дней</span>.</p>
                         </div>
-                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-500">
+                        <div class="bg-yellow-900/30 p-4 rounded-lg border border-yellow-700">
                             <h5 class="font-semibold text-yellow-300">Хранение батника</h5>
                              <p class="text-yellow-200">Бан на <span class="highlight">20 дней</span>.</p>
                         </div>
@@ -478,11 +519,11 @@
                 <h2 class="card-title">Условия вызова игрока на проверку</h2>
                 <p class="mb-6 text-gray-300">Существуют строгие правила, когда можно и нельзя вызывать игрока на проверку, чтобы избежать несправедливых банов.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2">Основное правило (АФК)</h4>
                         <p>Нельзя вызывать игрока, если он в АФК <span class="highlight">> 10 секунд</span>. Если игрок двигался и встал в АФК, у модератора есть <span class="highlight">ровно 10 секунд</span>, чтобы его вызвать. Нарушение — устный выговор.</p>
                     </div>
-                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-500">
+                    <div class="p-4 bg-green-900/30 rounded-lg border border-green-700">
                         <h4 class="font-semibold text-lg mb-2 text-green-300">Исключение (КТ + DupeIP)</h4>
                         <p class="text-green-200">Если игрок в боевом теге (КТ) и АФК, но <code class="bg-gray-700 p-1 rounded">/dupeip</code> показывает баны за читы на других аккаунтах, его <span class="highlight">можно вызвать</span> по истечении КТ, даже нарушая правило 10 секунд. Проверка <code class="bg-gray-700 p-1 rounded">/dupeip</code> должна быть на записи.</p>
                     </div>
@@ -500,7 +541,7 @@
                     <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">4</span><div><strong>Переподключение после разрыва:</strong> до <span class="highlight">5 минут</span> (+1 минута на принятие).</div></li>
                     <li class="flex items-start"><span class="text-indigo-400 font-bold w-8 h-8 text-center rounded-full bg-indigo-900/50 flex-shrink-0 flex items-center justify-center mr-4">5</span><div><strong>Неверный AnyDesk:</strong> Модератор ждет до конца времени проверки.</div></li>
                 </ul>
-                <div class="mt-4 p-3 bg-red-900/30 rounded-lg border border-red-500">
+                <div class="mt-4 p-3 bg-red-900/30 rounded-lg border border-red-700">
                     <p class="text-red-200"><strong>Важно:</strong> Запись уклона/игнора должна быть <span class="highlight">не менее 5 минут</span>, иначе модератор получит устный выговор.</p>
                 </div>
             </section>
@@ -525,7 +566,7 @@
                      <div class="flowchart-item">
                         <strong>Шаг 4:</strong> В начале или конце проверки попросите выйти с сервера и показать IP-адреса подключений.
                     </div>
-                    <div class="mt-4 p-3 bg-yellow-900/30 rounded-lg border border-yellow-500 w-full">
+                    <div class="mt-4 p-3 bg-yellow-900/30 rounded-lg border border-yellow-700 w-full">
                         <p class="text-yellow-200"><strong>Если игрок "тупит":</strong> Если после объяснений игрок не предоставляет доступ, дождитесь истечения времени проверки (+1-2 минуты) и баньте за <span class="ban-reason">Уклон от проверки [время вышло]</span>.</p>
                     </div>
                 </div>
@@ -540,16 +581,16 @@
             
             <!-- Признание игрока -->
             <section id="confession" class="card">
-                <h2 class="card-title">Признание игрока в использовании/хранении читов</h2>
-                <p>Если игрок сам признается в нарушении (например, "я использовал читы 10 дней назад" или "у меня хранение"), модератор <span class="highlight">все равно обязан его проверить</span>.</p>
-                <p class="mt-4"><strong>Наказание:</strong> Бан на <span class="highlight">46 дней</span> с указанием соответствующей причины. При таком бане тиммейту бан <span class="highlight">НЕ ВЫДАЕТСЯ</span>.</p>
+                <h2 class="card-title">Признание игрока в хранении читов</h2>
+                <p>Если игрок сам признается в нарушении (например, "я использовал читы 10 дней назад" или "у меня хранение"), модератор <span class="highlight">может его забанить за признание</span>.</p>
+                <p class="mt-4"><strong>Наказание:</strong> Бан на <span class="highlight">46 дней</span> с указанием соответствующей причины. Если игрок признается в хранении/в неистекшем сроке тиммейту бан <span class="highlight">НЕ ВЫДАЕТСЯ</span>.</p>
             </section>
 
             <!-- Особые проверки -->
             <section id="special-checks" class="card">
                 <h2 class="card-title">Особые случаи проверок: D.HELPER и FunPay</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2">Проверка D.HELPER'ов</h4>
                          <ul class="list-disc list-inside space-y-2">
                             <li><span class="highlight">8 минут</span> на предоставление AnyDesk.</li>
@@ -557,7 +598,7 @@
                             <li>Если D.HELPER встал в АФК после вызова и не отвечает <span class="highlight">5 минут</span>, его можно банить.</li>
                         </ul>
                     </div>
-                    <div class="p-4 bg-gray-800 rounded-lg">
+                    <div class="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
                         <h4 class="font-semibold text-lg mb-2">Проверка на FunPay</h4>
                         <ul class="list-disc list-inside space-y-2">
                             <li><span class="highlight">Запрещено</span> просить игрока заходить на аккаунты по никам/номерам из истории авторизации.</li>
@@ -597,9 +638,10 @@
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        const currentId = entry.target.id;
                         navLinks.forEach(link => {
                             link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            if (link.getAttribute('href').substring(1) === currentId) {
                                 link.classList.add('active');
                             }
                         });
